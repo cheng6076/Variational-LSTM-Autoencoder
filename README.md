@@ -19,6 +19,7 @@ Following the above two papers, the variational layer is only added in between t
 This code requires [Torch7](http://torch.ch/) and [nngraph](http://github.com/torch/nngraph)
 
 ## Usage
-On GPU: th LSTMAutoencoder.lua -gpuid 0
+- training on GPU: th LSTMAutoencoder.lua -gpuid 0
+- sampling on GPU: th sample.lua -gpuid 0 -cv cv/checkpoint -data dataset/test
 
 

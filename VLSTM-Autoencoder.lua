@@ -87,8 +87,10 @@ print('number of parameters in the model: ' .. params:nElement())
 -- make a bunch of clones after flattening, as that reallocates memory
 clones = {}
 for name,proto in pairs(protos) do
-  print('cloning ' .. name)
-  clones[name] = model_utils.clone_many_times(proto, opt.seq_length, not proto.parameters)
+  if name == 'enc' or name == 'dec' or name == 'criterion' then
+    print('cloning ' .. name)
+    clones[name] = model_utils.clone_many_times(proto, opt.seq_length, not proto.parameters)
+  end
 end
 -- encoder initial states
 init_state = {}
@@ -138,6 +140,8 @@ function eval_split(split_idx)
       for i=1,#init_state do table.insert(enc_state[t], lst[i]) end
     end
 
+    protos.connection_enc:evaluate()
+    protos.connection_dec:evaluate()
     local mean, log_var = unpack(protos.connection_enc:forward(enc_state[opt.seq_length][#init_state]))
     local z = protos.sampler:forward({mean, log_var})
     local dec_first = protos.connection_dec:forward(z)
@@ -305,5 +309,5 @@ for i = 1, iterations do
   end
 end
 
---test_loss = eval_split(3)
---print (string.format("test_loss = %6.4f", test_loss))
+test_loss = eval_split(3)
+print (string.format("test_loss = %6.4f", test_loss))
