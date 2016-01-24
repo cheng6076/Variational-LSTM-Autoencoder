@@ -1,4 +1,4 @@
-# LSTM-Autoencoder
+# Variational LSTM-Autoencoder
 
 This project implements the Variational LSTM sequence to sequence architecture for a sentence auto-encoding task.
 In general, I follow the paper "[Variational Recurrent Auto-encoders](http://arxiv.org/abs/1412.6581)" and "[Generating Sentences from a Continuous Space](http://arxiv.org/abs/1511.06349)". 
